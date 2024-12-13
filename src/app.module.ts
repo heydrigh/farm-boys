@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { configurationService } from './config/config.service';
+import { CropsModule } from './crops/crops.module';
 
 @Module({
   imports: [
@@ -9,6 +10,7 @@ import { configurationService } from './config/config.service';
       isGlobal: true,
     }),
     TypeOrmModule.forRoot(configurationService.getTypeOrmConfig()),
+    CropsModule,
   ],
   controllers: [],
   providers: [],
