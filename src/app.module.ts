@@ -5,6 +5,7 @@ import { configurationService } from './config/config.service';
 import { CropsModule } from './crops/crops.module';
 import { ProducersModule } from './producers/producers.module';
 import { FarmsModule } from './farms/farms.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @Module({
   imports: [
@@ -15,6 +16,7 @@ import { FarmsModule } from './farms/farms.module';
     CropsModule,
     ProducersModule,
     FarmsModule,
+    DashboardModule,
   ],
   controllers: [],
   providers: [],
