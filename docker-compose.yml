@@ -10,23 +10,12 @@ services:
     ports:
       - '5432:5432'
     volumes:
-      - pgdata:/var/lib/postgresql/data
-
-  nestjs:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: nestjs_app
-    ports:
-      - '3333:3333'
-    volumes:
-      - .:/app
-      - /app/node_modules
-    command: sh -c "yarn install && yarn start:dev"
-    env_file:
-      - .env
-    depends_on:
-      - postgres
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - nest-network
 
 volumes:
-  pgdata:
+  postgres-data:
+
+networks:
+  nest-network:

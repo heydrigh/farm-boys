@@ -42,7 +42,6 @@ export class Farm {
 
   @OneToOne(() => Producer, (producer) => producer.farm, {
     onDelete: 'CASCADE',
-    eager: true,
   })
   @ApiProperty({
     description: 'The producer who owns the farm',

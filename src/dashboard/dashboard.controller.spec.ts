@@ -89,14 +89,14 @@ describe('DashboardController', () => {
     it('should return farms grouped by crop', async () => {
       mockDashboardService.getFarmsByCrop.mockResolvedValue([
         { crop: 'soy', count: 1 },
-        { crop: 'Corn', count: 2 },
+        { crop: 'corn', count: 2 },
       ]);
 
       const result = await controller.getFarmsByCrop();
       expect(mockDashboardService.getFarmsByCrop).toHaveBeenCalled();
       expect(result).toEqual([
         { crop: 'soy', count: 1 },
-        { crop: 'Corn', count: 2 },
+        { crop: 'corn', count: 2 },
       ]);
     });
   });
