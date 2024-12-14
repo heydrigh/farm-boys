@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { configurationService } from './config/config.service';
 import { CropsModule } from './crops/crops.module';
 import { ProducersModule } from './producers/producers.module';
+import { FarmsModule } from './farms/farms.module';
 
 @Module({
   imports: [
@@ -13,6 +14,7 @@ import { ProducersModule } from './producers/producers.module';
     TypeOrmModule.forRoot(configurationService.getTypeOrmConfig()),
     CropsModule,
     ProducersModule,
+    FarmsModule,
   ],
   controllers: [],
   providers: [],

@@ -38,7 +38,7 @@ describe('ProducersService', () => {
   });
 
   describe('create', () => {
-    it('should create a new producer', async () => {
+    it('should successfully create a new producer', async () => {
       const createDto = { cpfCnpj: '12345678901', name: 'John Doe' };
       const result = await service.create(createDto);
       expect(repository.create).toHaveBeenCalledWith(createDto);
@@ -48,7 +48,7 @@ describe('ProducersService', () => {
   });
 
   describe('findAll', () => {
-    it('should return an array of producers', async () => {
+    it('should return a list of producers', async () => {
       const result = await service.findAll();
       expect(repository.find).toHaveBeenCalled();
       expect(result).toEqual([mockProducer]);
@@ -56,7 +56,7 @@ describe('ProducersService', () => {
   });
 
   describe('findOne', () => {
-    it('should find a producer by ID', async () => {
+    it('should find a producer by its ID', async () => {
       const result = await service.findOne('1');
       expect(repository.findOneByOrFail).toHaveBeenCalledWith({ id: '1' });
       expect(result).toEqual(mockProducer);
@@ -64,11 +64,11 @@ describe('ProducersService', () => {
   });
 
   describe('update', () => {
-    it('should update a producer', async () => {
+    it('should update an existing producer', async () => {
       const updateDto = { name: 'Updated Name' };
-      jest
-        .spyOn(repository, 'findOneByOrFail')
-        .mockResolvedValueOnce(mockProducer);
+      mockProducerRepository.findOneByOrFail.mockResolvedValueOnce(
+        mockProducer,
+      );
 
       const result = await service.update('1', updateDto);
       expect(repository.findOneByOrFail).toHaveBeenCalledWith({ id: '1' });
@@ -81,10 +81,10 @@ describe('ProducersService', () => {
   });
 
   describe('remove', () => {
-    it('should remove a producer', async () => {
-      jest
-        .spyOn(repository, 'findOneByOrFail')
-        .mockResolvedValueOnce(mockProducer);
+    it('should delete an existing producer', async () => {
+      mockProducerRepository.findOneByOrFail.mockResolvedValueOnce(
+        mockProducer,
+      );
       await service.remove('1');
       expect(repository.findOneByOrFail).toHaveBeenCalledWith({ id: '1' });
       expect(repository.remove).toHaveBeenCalledWith(mockProducer);
