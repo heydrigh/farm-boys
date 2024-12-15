@@ -1,73 +1,106 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Farm Management System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This project is a Farm Management System built with NestJS, TypeORM, PostgreSQL, and Docker. It includes modules for managing crops, producers, farms, and dashboards. Follow the instructions below to set up and run the project.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## **Setup Instructions**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### **1. Create `.env` File**
 
-## Installation
+1. Copy the contents of `.env.example` to `.env`:
 
-```bash
-$ yarn install
-```
+   ```bash
+   cp .env.example .env
+   ```
 
-## Running the app
+2. Edit the `.env` file to set your environment variables. Ensure the database configuration matches your setup.
 
-```bash
-# development
-$ yarn run start
+---
 
-# watch mode
-$ yarn run start:dev
+### **2. Run the Project with Docker**
 
-# production mode
-$ yarn run start:prod
-```
+1. Start the containers:
 
-## Test
+   ```bash
+   docker-compose up -d
+   ```
 
-```bash
-# unit tests
-$ yarn run test
+2. Verify that the services are running:
 
-# e2e tests
-$ yarn run test:e2e
+   ```bash
+   docker ps
+   ```
 
-# test coverage
-$ yarn run test:cov
-```
+---
 
-## Support
+### **3. Install Dependencies**
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+1. Install the necessary packages using Yarn:
 
-## Stay in touch
+   ```bash
+   yarn
+   ```
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+---
 
-## License
+### **4. Run in Development Mode**
 
-Nest is [MIT licensed](LICENSE).
+1. Start the development server:
+
+   ```bash
+   yarn dev
+   ```
+
+---
+
+### **5. Set Up the Database**
+
+1. Run the database migrations to create the initial schema:
+
+   ```bash
+   yarn migration:run
+   ```
+
+2. Seed the database with initial mock data:
+
+   ```bash
+   yarn seed
+   ```
+
+---
+
+## **Available Scripts**
+
+| Command               | Description                            |
+|-----------------------|----------------------------------------|
+| `yarn`               | Install dependencies                   |
+| `yarn dev`           | Start the server in development mode   |
+| `yarn build`         | Build the project                      |
+| `yarn start`         | Start the built application            |
+| `yarn migration:run` | Run database migrations                |
+| `yarn seed`          | Seed the database with mock data       |
+
+---
+
+## **Project Modules**
+
+1. **Crops Module**: Manage crops like Soybean, Corn, and more.
+2. **Producers Module**: Manage producers, including their farms.
+3. **Farms Module**: Manage farm details, areas, and related crops.
+4. **Dashboard Module**: Provides summary statistics and analytics.
+
+---
+
+## **Technologies Used**
+
+- **Backend**: NestJS
+- **Database**: PostgreSQL with TypeORM
+- **Containerization**: Docker & Docker Compose
+- **Environment Configuration**: `.env` with `dotenv`
+
+---
+
+## **Contact**
+
+For questions or feedback, feel free to reach out.
