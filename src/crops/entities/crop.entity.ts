@@ -13,9 +13,5 @@ export class Crop {
   name: string;
 
   @ManyToMany(() => Farm, (farm) => farm.crops)
-  @ApiProperty({
-    description: 'Farms associated with this crop',
-    type: () => [Farm],
-  })
   farms: Farm[];
 }

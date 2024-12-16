@@ -27,7 +27,14 @@ export class SeedService {
   }
 
   private async seedCrops(): Promise<void> {
-    const cropNames = ['Soja', 'Milho', 'Café', 'Cana-de-Açúcar', 'Trigo'];
+    const cropNames = [
+      'Soja',
+      'Milho',
+      'Café',
+      'Cana-de-Açúcar',
+      'Trigo',
+      'Algodão',
+    ];
     const crops = cropNames.map((name) => this.cropRepository.create({ name }));
     await this.cropRepository.save(crops);
 
@@ -55,23 +62,72 @@ export class SeedService {
   }
 
   private async seedFarms(producers: Producer[]): Promise<void> {
+    const brazilianStates = [
+      'AC',
+      'AL',
+      'AM',
+      'AP',
+      'BA',
+      'CE',
+      'DF',
+      'ES',
+      'GO',
+      'MA',
+      'MG',
+      'MS',
+      'MT',
+      'PA',
+      'PB',
+      'PE',
+      'PI',
+      'PR',
+      'RJ',
+      'RN',
+      'RO',
+      'RR',
+      'RS',
+      'SC',
+      'SE',
+      'SP',
+      'TO',
+    ];
+
+    const brazilianCities = [
+      'São Paulo',
+      'Rio de Janeiro',
+      'Belo Horizonte',
+      'Curitiba',
+      'Porto Alegre',
+      'Brasília',
+      'Recife',
+      'Salvador',
+      'Manaus',
+      'Fortaleza',
+    ];
+
+    const randomItem = (arr: string[]) =>
+      arr[Math.floor(Math.random() * arr.length)];
+
     const farmData = producers.map((producer, index) => ({
       name: `Fazenda ${index + 1}`,
-      city: `Cidade ${index + 1}`,
-      state: `Estado ${index + 1}`,
-      totalArea: 100 + index * 20,
-      agriculturalArea: 60 + index * 10,
-      vegetationArea: 40 + index * 10,
+      city: randomItem(brazilianCities),
+      state: randomItem(brazilianStates),
+      totalArea: 100 + Math.floor(Math.random() * 500),
+      agriculturalArea: 60 + Math.floor(Math.random() * 300),
+      vegetationArea: 40 + Math.floor(Math.random() * 240),
       producer,
     }));
 
     const farms = farmData.map((data) => this.farmRepository.create(data));
     const savedFarms = await this.farmRepository.save(farms);
 
-    // Assign crops to farms
     const crops = await this.cropRepository.find();
     savedFarms.forEach((farm) => {
-      farm.crops = crops.slice(0, 3); // Assign first 3 crops to each farm
+      const numberOfCrops = Math.floor(Math.random() * crops.length) + 1;
+      const randomCrops = crops
+        .sort(() => 0.5 - Math.random())
+        .slice(0, numberOfCrops);
+      farm.crops = randomCrops;
     });
     await this.farmRepository.save(savedFarms);
 
