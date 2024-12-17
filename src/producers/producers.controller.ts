@@ -17,7 +17,6 @@ import { Producer } from './entities/producer.entity';
 @Controller('producers')
 export class ProducersController {
   constructor(private readonly producersService: ProducersService) {}
-
   @Post()
   @ApiOperation({ summary: 'Create a new producer' })
   @ApiResponse({

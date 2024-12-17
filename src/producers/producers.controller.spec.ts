@@ -42,6 +42,15 @@ describe('ProducersController', () => {
       const createDto: CreateProducerDto = {
         cpfCnpj: '12345678901',
         name: 'John Doe',
+        farm: {
+          name: 'Fazenda Teste',
+          city: 'Cidade Teste',
+          state: 'SP',
+          totalArea: 100,
+          agriculturalArea: 60,
+          vegetationArea: 40,
+          cropIds: ['crop-1', 'crop-2'],
+        },
       };
       const result = await controller.create(createDto);
       expect(service.create).toHaveBeenCalledWith(createDto);

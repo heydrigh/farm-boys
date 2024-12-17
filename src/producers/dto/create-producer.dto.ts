@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, IsString, Matches } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, Matches, ValidateNested } from 'class-validator';
+import { CreateFarmDto } from 'src/farms/dto/create-farm.dto';
 
 export class CreateProducerDto {
   @ApiProperty({ description: 'CPF or CNPJ of the producer' })
@@ -14,4 +16,12 @@ export class CreateProducerDto {
   @IsNotEmpty()
   @IsString()
   name: string;
+
+  @ApiProperty({
+    description: 'Farm associated with the producer',
+    type: CreateFarmDto,
+  })
+  @ValidateNested()
+  @Type(() => CreateFarmDto)
+  farm: CreateFarmDto;
 }

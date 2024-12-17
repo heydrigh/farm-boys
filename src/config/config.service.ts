@@ -27,7 +27,7 @@ export class ConfigurationService {
       database: this.getValue('DB_NAME'),
       entities: [join(__dirname, '../**/*.entity.{ts,js}')],
       migrations: [join(__dirname, '../migrations/**/*.{ts,js}')],
-      synchronize: false,
+      synchronize: true,
       ssl: false,
     };
   }

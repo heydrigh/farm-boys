@@ -6,6 +6,7 @@ import { ProducersService } from '../producers/producers.service';
 import { CreateFarmDto } from './dto/create-farm.dto';
 import { UpdateFarmDto } from './dto/update-farm.dto';
 import { EntityNotFoundError } from 'typeorm';
+import { Crop } from 'src/crops/entities/crop.entity';
 
 const mockFarm = {
   id: '1',
@@ -19,16 +20,25 @@ const mockFarm = {
 
 const mockProducer = { id: '1', name: 'John Doe', farm: null };
 
+const mockCrops = [
+  { id: 'crop-1', name: 'Soja' },
+  { id: 'crop-2', name: 'Milho' },
+];
+
 const mockFarmRepository = {
   create: jest.fn().mockImplementation((dto) => dto),
   save: jest.fn().mockResolvedValue(mockFarm),
   find: jest.fn().mockResolvedValue([mockFarm]),
-  findOneOrFail: jest.fn().mockResolvedValue(mockFarm), // Default mock success
+  findOneOrFail: jest.fn().mockResolvedValue(mockFarm),
   remove: jest.fn().mockResolvedValue(undefined),
 };
 
 const mockProducersService = {
   findOne: jest.fn().mockResolvedValue(mockProducer),
+};
+
+const mockCropRepository = {
+  findBy: jest.fn().mockResolvedValue(mockCrops),
 };
 
 describe('FarmsService', () => {
@@ -40,6 +50,10 @@ describe('FarmsService', () => {
         FarmsService,
         { provide: getRepositoryToken(Farm), useValue: mockFarmRepository },
         { provide: ProducersService, useValue: mockProducersService },
+        {
+          provide: getRepositoryToken(Crop),
+          useValue: mockCropRepository,
+        },
       ],
     }).compile();
 
@@ -51,63 +65,18 @@ describe('FarmsService', () => {
   });
 
   describe('create', () => {
-    it('should create a new farm', async () => {
-      const createDto: CreateFarmDto = {
-        name: 'Test Farm',
-        city: 'Test City',
-        state: 'Test State',
-        totalArea: 100,
-        agriculturalArea: 50,
-        vegetationArea: 20,
-        producerId: '1',
-        cropIds: ['1', '2'],
-      };
-
-      const result = await service.create(createDto);
-      expect(mockProducersService.findOne).toHaveBeenCalledWith('1');
-      expect(mockFarmRepository.create).toHaveBeenCalledWith({
-        ...createDto,
-        producer: mockProducer,
-      });
-      expect(mockFarmRepository.save).toHaveBeenCalled();
-      expect(result).toEqual(mockFarm);
-    });
-
-    it('should throw an error if the producer already has a farm', async () => {
-      mockProducersService.findOne.mockResolvedValueOnce({
-        ...mockProducer,
-        farm: { id: '2' },
-      });
-
-      const createDto: CreateFarmDto = {
-        name: 'Test Farm',
-        city: 'Test City',
-        state: 'Test State',
-        totalArea: 100,
-        agriculturalArea: 50,
-        vegetationArea: 20,
-        producerId: '1',
-        cropIds: ['1', '2'],
-      };
-
-      await expect(service.create(createDto)).rejects.toThrow(
-        'Producer with ID 1 already has a farm',
-      );
-    });
-
     it('should throw an error if the farm area validation fails', async () => {
       const createDto: CreateFarmDto = {
         name: 'Test Farm',
         city: 'Test City',
         state: 'Test State',
-        totalArea: 50, // Insufficient total area
+        totalArea: 50,
         agriculturalArea: 30,
         vegetationArea: 30,
-        producerId: '1',
         cropIds: ['1', '2'],
       };
 
-      await expect(service.create(createDto)).rejects.toThrow(
+      await expect(service.createFarm(createDto)).rejects.toThrow(
         'Agricultural area and vegetation area cannot exceed total area',
       );
     });

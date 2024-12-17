@@ -42,11 +42,6 @@ export class CreateFarmDto {
   @Min(0)
   vegetationArea: number;
 
-  @ApiProperty({ description: 'ID of the producer who owns the farm' })
-  @IsNotEmpty()
-  @IsString()
-  producerId: string;
-
   @ApiProperty({
     description: 'List of crop IDs associated with the farm',
     type: [String],

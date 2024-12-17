@@ -113,7 +113,7 @@ export class SeedService {
       city: randomItem(brazilianCities),
       state: randomItem(brazilianStates),
       totalArea: 100 + Math.floor(Math.random() * 500),
-      agriculturalArea: 60 + Math.floor(Math.random() * 300),
+      agriculturalArea: 60 + Math.floor(Math.random() * 100),
       vegetationArea: 40 + Math.floor(Math.random() * 240),
       producer,
     }));

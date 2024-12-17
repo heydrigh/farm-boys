@@ -43,13 +43,9 @@ export class Farm {
   @OneToOne(() => Producer, (producer) => producer.farm, {
     onDelete: 'CASCADE',
   })
-  @ApiProperty({
-    description: 'The producer who owns the farm',
-    type: () => Producer,
-  })
   producer: Producer;
 
-  @ManyToMany(() => Crop, (crop) => crop.farms, { eager: true })
+  @ManyToMany(() => Crop, (crop) => crop.farms, { eager: true, cascade: true })
   @JoinTable()
   @ApiProperty({
     description: 'Crops associated with the farm',
